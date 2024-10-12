@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Source Sans 3", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[#fcfcfc] dark:bg-primaryDark dark:text-white text-[#222];
+}
+
+/* TYPOGRAPHY */
+h1 {
+  @apply text-[2.5rem];
+}
+
+h2 {
+  @apply text-[2rem];
+}
+
+h3 {
+  @apply text-[1.5rem];
+}
+
+h4 {
+  @apply text-xl;
+}
+
+h5 {
+  @apply text-base;
+}
+
+h6 {
+  @apply text-sm;
+}
+
+
+/* FORM */
+.form-input {
+  @apply w-full bg-tertiary dark:bg-tertiaryDark text-white rounded-t p-3 border-b outline-none;
+}
+
+/* scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-[#888]
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-[#555]/80 hover:bg-[#555]
+}
