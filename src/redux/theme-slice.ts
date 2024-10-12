@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Event } from "../lib/types";
 
-const initialState = {
-    mode: "dark",
-    isSidebarOpen: false,
-};
+ type StateType = {
+    mode: "dark" | "light",
+    isSidebarOpen: boolean
+ }
+
+    const initialState: StateType = {
+        mode: "dark",
+        isSidebarOpen: false,
+    };
 
 const themeSlice = createSlice({
     name: "theme",

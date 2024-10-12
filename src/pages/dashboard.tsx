@@ -89,7 +89,7 @@ const Dashboard = () => {
 							<IconButton icon={<MdOutlineDownload className='text-xl text-secondary' />} />
 						</div>
 						<Suspense fallback={<Loader />}>
-							<LineChartComponent height={260} legendPosition='bottom' smooth='smooth' />
+							<LineChartComponent height={260} legendPosition='bottom' lineType='smooth' />
 						</Suspense>
 					</Link>
 				</div>
