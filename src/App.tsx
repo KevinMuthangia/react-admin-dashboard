@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "./redux/store";
 import MainLayout from "./layouts/main-layout";
 import Loader from "./components/loader";
 import "./App.css";
@@ -25,6 +26,7 @@ const Error = lazy(() => import("./pages/error"));
 const App = () => {
 	return (
 		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
 			<BrowserRouter>
 				<MainLayout>
 				<Suspense fallback={<Loader />}>
@@ -44,6 +46,7 @@ const App = () => {
 				</Suspense>
 				</MainLayout>
 			</BrowserRouter>
+			</PersistGate>
 		</Provider>
 	)
 }

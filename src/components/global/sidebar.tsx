@@ -3,21 +3,12 @@ import { RootState } from "../../redux/store";
 import { toggleSidebarOpen } from "../../redux/theme-slice";
 import SidebarItem from "./sidebar-item";
 import IconButton from "../icon-button";
+import CurrentUser from "../currentUser";
 import adminImg from "../../assets/img.jpg";
 
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoHomeOutline } from "react-icons/io5";
-import { HiOutlineUsers } from "react-icons/hi2";
-import { MdOutlineContacts } from "react-icons/md";
-import { ImFileText2 } from "react-icons/im";
-import { FiPieChart } from "react-icons/fi";
-import { 
-    FaRegUser, 
-    FaRegCalendarAlt, 
-    FaRegQuestionCircle, 
-    FaChartBar, 
-    FaChartLine, 
-} from "react-icons/fa";
+import { dataLinks, chartLinks, pageLinks } from "../../lib/nav";
 
 
 
@@ -40,11 +31,7 @@ const Sidebar = () => {
 
             {/* IMAGE */}
             <div className={`${isSidebarOpen ? "w-full mb-4 text-center" : "max-w-0 max-h-0 overflow-hidden"}`}>
-                <div className="mx-auto w-[45%] aspect-square rounded-full bg-[#fcfcfc] dark:bg-primaryDark overflow-hidden">
-                    <img src={adminImg} alt="admin" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="font-bold">Kevin M.</h3>
-                <h5 className="text-secondary">Admin</h5>
+                <CurrentUser name="Kev M." role="Admin" profilePic={adminImg} />
             </div>
 
             {/* LINKS */}
@@ -53,19 +40,19 @@ const Sidebar = () => {
                 <h6 className={`${isSidebarOpen ? "pl-[5%]" : ""} text-[#999] uppercase pl-[5%] my-2`}>Data</h6>
                 {
                     dataLinks.map((link, index) => (
-                        <SidebarItem key={index} href={link.path} icon={link.icon} text={link.text} />
+                        <SidebarItem key={index} href={link.path} icon={<link.icon />} text={link.text} />
                     ))
                 }
                 <h6 className={`${isSidebarOpen ? "pl-[5%]" : ""} text-[#999] uppercase pl-[5%] my-2`}>Pages</h6>
                 {
                     pageLinks.map((link, index) => (
-                        <SidebarItem key={index} href={link.path} icon={link.icon} text={link.text} />
+                        <SidebarItem key={index} href={link.path} icon={<link.icon />} text={link.text} />
                     ))
                 }
                 <h6 className={`${isSidebarOpen ? "pl-[5%]" : ""} text-[#999] uppercase pl-[5%] my-2`}>Charts</h6>
                 {
                     chartLinks.map((link, index) => (
-                        <SidebarItem key={index} href={link.path} icon={link.icon} text={link.text} />
+                        <SidebarItem key={index} href={link.path} icon={<link.icon />} text={link.text} />
                     ))
                 }
             </nav>
@@ -74,58 +61,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar; 
-
-const dataLinks = [
-    {
-        text: "Manage Team",
-        path: "team",
-        icon: <HiOutlineUsers />
-    },
-    {
-        text: "Contact Information",
-        path: "contact",
-        icon: <MdOutlineContacts />
-    },
-    {
-        text: "Invoices Balances",
-        path: "invoices",
-        icon: <ImFileText2 />
-    },
-];
-
-
-const pageLinks = [
-    {
-        text: "Profile Form",
-        path: "create-user",
-        icon: <FaRegUser />
-    },
-    {
-        text: "Calender",
-        path: "calender",
-        icon: <FaRegCalendarAlt />
-    },
-    {
-        text: "FAQ Page",
-        path: "faqs",
-        icon: <FaRegQuestionCircle />
-    },
-]
-
-const chartLinks = [
-    {
-        text: "Bar Chart",
-        path: "bar",
-        icon: <FaChartBar  />
-    },
-    {
-        text: "Pie Chart",
-        path: "pie",
-        icon: <FiPieChart />
-    },
-    {
-        text: "Line Chart",
-        path: "line",
-        icon: <FaChartLine />
-    },
-]

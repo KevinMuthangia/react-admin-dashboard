@@ -16,35 +16,46 @@ interface CalendarEvent {
     allDay: boolean;
 }
 
+const storedEvents = localStorage.getItem("currentEvents");
+const initialEvents: CalendarEvent[] = storedEvents ? JSON.parse(storedEvents) : [];
+
 const Calendar = () => {
 	document.title = "KevMuthangia | Calender"
 
 	const [currentEvents, setCurrentEvents] = useState<CalendarEvent []>( 
-		JSON.parse(localStorage.getItem("currentEvents") || "[]") || []
+		initialEvents
 	);
 
-	function addEvents (events: CalendarEvent[]) {
-		setCurrentEvents(prev => [...prev, ...events].filter((event, index, self) => self.findIndex((e) => e.id === event.id) === index));
-		
-	}
+	const addEvents = (events: CalendarEvent[]) => {
+		setCurrentEvents((prev) => {
+		  // Prevent duplicate events by filtering them based on their IDs
+		  const newEvents = [...prev, ...events].filter(
+			(event, index, self) => self.findIndex((e) => e.id === event.id) === index
+		  );
+		  return newEvents;
+		});
+	};
 
-  const handleDateClick = (selected: DateSelectArg) => {
+const handleDateClick = (selected: DateSelectArg) => {
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
 
     if (title) {
-      calendarApi.addEvent({
+      const newEvent = {
         id: `${selected.startStr}-${title}`,
         title,
         start: selected.startStr,
         end: selected.endStr,
         allDay: selected.allDay,
-      });
+      };
+      calendarApi.addEvent(newEvent); // Add the event to FullCalendar
+      addEvents([newEvent]); // Add the event to state
     }
   };
 
   const handleEventClick = (selected: EventClickArg) => {
+	console.log("select: ", selected)
     if (
       window.confirm(
         `Are you sure you want to delete the event '${selected.event.title}'`
@@ -72,19 +83,24 @@ const Calendar = () => {
 					<ul className="mt-2">
 						{currentEvents.length && currentEvents.map((event) => (
 						<li
-							key={event?.id}
-							className="bg-secondary p-2 rounded my-4 text-black"
+							key={event.id}
+							className="bg-purple dark:bg-purpleDark p-2 rounded my-4"
 						>
-							<p className="font-medium text-sm">{event?.title}</p>
-							<p className="text-sm">
-								{
-									formatDate(event?.start, {
-										year: "numeric",
-										month: "short",
-										day: "numeric",
-									})
-								}
-							</p>
+							<div className="flex justify-between items-center">
+								<div>	
+									<p className="font-medium text-base capitalize">{event.title}</p>
+									<p className="text-sm">
+										{
+											formatDate(event.start, {
+												year: "numeric",
+												month: "short",
+												day: "numeric",
+											})
+										}
+									</p>
+								</div>
+								{/* ADD DELETE BUTTON with IconButton */}
+							</div>
 						</li>
 						))}
 					</ul>
@@ -115,6 +131,7 @@ const Calendar = () => {
 					eventClick={handleEventClick}
 					// fix type error
 					eventsSet={(events: any) => addEvents(events)}
+					initialEvents={initialEvents}
 				/>
 			</div>
 		</div>

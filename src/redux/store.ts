@@ -1,22 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./theme-slice";
-import { loadFromLocalStorage, saveToLocalStorage } from "../utils/persistReduxStore";
+import { persistStore } from 'redux-persist';
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import { persistedReducer } from "./persistConfig";
 
-const persistedState = loadFromLocalStorage();
 
 const store = configureStore({
-    reducer: {
-        theme: themeReducer,
+    reducer: { 
+        theme: persistedReducer
     },
-    preloadedState: persistedState
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }),
 });
 
-// Save state to local storage after every action
-store.subscribe(() => {
-    saveToLocalStorage(store.getState());
-});
+export const persistor = persistStore(store);
 
-// src/redux/store.ts
 export type RootState = ReturnType<typeof store.getState>;
 
-export default store
+export default store;
+

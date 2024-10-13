@@ -5,10 +5,10 @@ import { createSlice } from "@reduxjs/toolkit";
     isSidebarOpen: boolean
  }
 
-    const initialState: StateType = {
-        mode: "dark",
-        isSidebarOpen: false,
-    };
+const initialState: StateType = {
+    mode: "dark",
+    isSidebarOpen: false,
+};
 
 const themeSlice = createSlice({
     name: "theme",

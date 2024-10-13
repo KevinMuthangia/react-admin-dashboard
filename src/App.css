@@ -26,6 +26,10 @@
 	@apply bg-secondary;
 }
 
+.fc-h-event {
+	@apply bg-purple dark:bg-purpleDark border-transparent;
+}
+
 /* AG GRID */
 .ag-theme-alpine {
 	width: 100%;
